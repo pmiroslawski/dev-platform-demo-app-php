@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+    php:
+        container_name: 'dev-platform-demo-app-php-fpm'
+        restart: "unless-stopped"
+        build:
+            context: ./_docker/config/php
+            dockerfile: Dockerfile
+#            args:
+#                TIMEZONE: ${TIMEZONE}
+        volumes:
+            - ./:/var/www/application
+        networks:
+            dev_private: ~
+            dev_internal:
+                ipv4_address: 10.56.1.61
+
+    nginx:
+        container_name: "dev-platform-demo-app-php-nginx"
+        restart:        "unless-stopped"
+        build:
+            context:    ./_docker/config/nginx
+            dockerfile: Dockerfile
+        links:
+            - php
+        volumes_from:
+            - php
+        networks:
+            dev_private: ~
+            dev_internal:
+                ipv4_address: 10.56.1.60
+
+networks:
+    dev_private:
+        driver: bridge
+    dev_internal:
+        external:
+            name: dev-platform_internal-network

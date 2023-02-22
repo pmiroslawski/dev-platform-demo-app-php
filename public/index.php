@@ -85,9 +85,9 @@
                             try {
                                 $connection = new AMQPConnection();
                                 $connection->setHost(getenv('ADDR_IP_RABBITMQ'));
-                                $connection->setLogin(getenv('RABBITMQ_ADMIN'));
-                                $connection->setPassword(getenv('RABBITMQ_ADMIN_PASS'));
-                                $connection->setVhost('/');
+                                $connection->setLogin(getenv('RABBITMQ_USER'));
+                                $connection->setPassword(getenv('RABBITMQ_PASS'));
+                                $connection->setVhost('/' . getenv('RABBITMQ_VHOST'));
                                 if ($connection->connect()) {
                                     $result = true;
                                 }

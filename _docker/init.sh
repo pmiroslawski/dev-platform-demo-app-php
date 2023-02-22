@@ -58,29 +58,33 @@ configure_mariadb() {
 }
 
 configure_rabbitmq() {
-  if [ -z "${MYSQL_ROOT_PASSWORD}" ]; then
-    echo "MYSQL_ROOT_PASSWORD has not been found."
+  if [ -z "${RABBITMQ_ADMIN}" ]; then
+    echo "RABBITMQ_ADMIN has not been found."
     exit 1;
   fi
 
-  if [ -z "${MYSQL_DATABASE}" ]; then
-    echo "MYSQL_DATABASE has not been found."
+  if [ -z "${RABBITMQ_USER}" ]; then
+    echo "RABBITMQ_USER has not been found."
     exit 1;
   fi
 
-  if [ -z "${MYSQL_USER}" ]; then
-    echo "MYSQL_USER has not been found."
+  if [ -z "${RABBITMQ_PASS}" ]; then
+    echo "RABBITMQ_PASS has not been found."
     exit 1;
   fi
 
-  if [ -z "${MYSQL_PASSWORD}" ]; then
-    echo "MYSQL_PASSWORD has not been found."
+  if [ -z "${RABBITMQ_VHOST}" ]; then
+    echo "RABBITMQ_VHOST has not been found."
     exit 1;
   fi
 
-  export RUN_MYSQL="mysql -uroot -p${MYSQL_ROOT_PASSWORD}"
+  docker exec -ti dev-platform-rabbitmq /bin/bash -c "rabbitmqctl add_vhost /$RABBITMQ_VHOST;";
+  docker exec -ti dev-platform-rabbitmq /bin/bash -c "rabbitmqctl add_user $RABBITMQ_USER $RABBITMQ_PASS;";
+  docker exec -ti dev-platform-rabbitmq /bin/bash -c "rabbitmqctl set_permissions -p /$RABBITMQ_VHOST $RABBITMQ_USER  \".*\" \".*\" \".*\";";
+
+  docker exec -ti dev-platform-rabbitmq /bin/bash -c "rabbitmqctl set_permissions -p /$RABBITMQ_VHOST $RABBITMQ_ADMIN  \".*\" \".*\" \".*\";";
 }
 
 # Database configure
 configure_mariadb
-#configure_rabbitmq
+configure_rabbitmq

@@ -16,10 +16,10 @@ ADD vhost/default.conf /etc/nginx/conf.d/default.conf
 RUN mkdir /etc/nginx/sites-available
 RUN mkdir /etc/nginx/sites-enabled
 
-ADD vhost/app.conf /etc/nginx/sites-available/
-RUN ln -s /etc/nginx/sites-available/app.conf /etc/nginx/sites-enabled/app.conf
+#ADD vhost/app.conf /etc/nginx/sites-available/
+#RUN ln -s /etc/nginx/sites-available/app.conf /etc/nginx/sites-enabled/app.conf
 
-RUN echo "upstream php-upstream { server php:9000; }" > /etc/nginx/conf.d/upstream.conf
+RUN echo "upstream php-upstream { server php-fpm:9000; }" > /etc/nginx/conf.d/upstream.conf
 
 RUN usermod -u 1000 nginx
 RUN groupmod -g 1000 nginx

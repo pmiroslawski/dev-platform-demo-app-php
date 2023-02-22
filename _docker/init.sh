@@ -51,10 +51,10 @@ configure_mariadb() {
 
   export RUN_MYSQL="mysql -uroot -p${MYSQL_ROOT_PASSWORD}"
 
-  docker exec -ti platform-dev-mariadb /bin/bash -c "echo CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE} | ${RUN_MYSQL}";
-  docker exec -ti platform-dev-mariadb /bin/bash -c "echo CREATE USER IF NOT EXISTS \'${MYSQL_USER}\'@\'%\' IDENTIFIED BY \'${MYSQL_PASSWORD}\' | ${RUN_MYSQL}";
-  docker exec -ti platform-dev-mariadb /bin/bash -c "echo GRANT USAGE ON ${MYSQL_DATABASE}.* TO \'${MYSQL_USER}\'@\'%\' IDENTIFIED BY \'${MYSQL_PASSWORD}\' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 | ${RUN_MYSQL}";
-  docker exec -ti platform-dev-mariadb /bin/bash -c "echo GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO \'${MYSQL_USER}\'@\'%\' | ${RUN_MYSQL}";
+  docker exec -ti dev-platform-mariadb /bin/bash -c "echo CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE} | ${RUN_MYSQL}";
+  docker exec -ti dev-platform-mariadb /bin/bash -c "echo CREATE USER IF NOT EXISTS \'${MYSQL_USER}\'@\'%\' IDENTIFIED BY \'${MYSQL_PASSWORD}\' | ${RUN_MYSQL}";
+  docker exec -ti dev-platform-mariadb /bin/bash -c "echo GRANT USAGE ON ${MYSQL_DATABASE}.* TO \'${MYSQL_USER}\'@\'%\' IDENTIFIED BY \'${MYSQL_PASSWORD}\' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 | ${RUN_MYSQL}";
+  docker exec -ti dev-platform-mariadb /bin/bash -c "echo GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO \'${MYSQL_USER}\'@\'%\' | ${RUN_MYSQL}";
 }
 
 configure_rabbitmq() {
@@ -79,13 +79,8 @@ configure_rabbitmq() {
   fi
 
   export RUN_MYSQL="mysql -uroot -p${MYSQL_ROOT_PASSWORD}"
-
-  docker exec -ti platform-dev-mariadb /bin/bash -c "echo CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE} | ${RUN_MYSQL}";
-  docker exec -ti platform-dev-mariadb /bin/bash -c "echo CREATE USER IF NOT EXISTS \'${MYSQL_USER}\'@\'%\' IDENTIFIED BY \'${MYSQL_PASSWORD}\' | ${RUN_MYSQL}";
-  docker exec -ti platform-dev-mariadb /bin/bash -c "echo GRANT USAGE ON ${MYSQL_DATABASE}.* TO \'${MYSQL_USER}\'@\'%\' IDENTIFIED BY \'${MYSQL_PASSWORD}\' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 | ${RUN_MYSQL}";
-  docker exec -ti platform-dev-mariadb /bin/bash -c "echo GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO \'${MYSQL_USER}\'@\'%\' | ${RUN_MYSQL}";
 }
 
 # Database configure
-#configure_mariadb
-configure_rabbitmq
+configure_mariadb
+#configure_rabbitmq

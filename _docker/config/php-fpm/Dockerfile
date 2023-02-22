@@ -40,4 +40,4 @@ RUN pecl install apcu && docker-php-ext-enable apcu
 RUN pecl install redis && docker-php-ext-enable redis.so
 RUN pecl install zip && docker-php-ext-enable zip
 
-WORKDIR /var/www/rma/app-app
+WORKDIR /var/www/application

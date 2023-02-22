@@ -1,20 +1,22 @@
 version: "3.9"
 
 services:
-    php:
+    php-fpm:
         container_name: 'dev-platform-demo-app-php-fpm'
         restart: "unless-stopped"
         build:
-            context: ./_docker/config/php
+            context: _docker/config/php-fpm
             dockerfile: Dockerfile
-#            args:
-#                TIMEZONE: ${TIMEZONE}
+        #            args:
+        #                TIMEZONE: ${TIMEZONE}
         volumes:
             - ./:/var/www/application
         networks:
             dev_private: ~
             dev_internal:
-                ipv4_address: 10.56.1.61
+                ipv4_address: ${ADDR_IP_DEMO_PHP_FPM}
+        env_file:
+            - .env
 
     nginx:
         container_name: "dev-platform-demo-app-php-nginx"
@@ -23,13 +25,13 @@ services:
             context:    ./_docker/config/nginx
             dockerfile: Dockerfile
         links:
-            - php
+            - php-fpm
         volumes_from:
-            - php
+            - php-fpm
         networks:
             dev_private: ~
             dev_internal:
-                ipv4_address: 10.56.1.60
+                ipv4_address: ${ADDR_IP_DEMO_NGINX}
 
 networks:
     dev_private:

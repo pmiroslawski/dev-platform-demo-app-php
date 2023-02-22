@@ -2,7 +2,7 @@
 
 
 
-This repository contains a demo PHP app and can be a working example of the  app which uses my `dev-platform` as the base running stack.
+This repository contains a demo PHP app and can be a working example of the app which uses [`Dev Platform`](https://github.com/pmiroslawski/dev-platform) as the base stack.
 
 Read the description of [documentation](https://github.com/pmiroslawski/dev-platform) to see what a `Dev Platform` is and how to run it.
 
@@ -37,6 +37,3 @@ Where value of $ADDR_IP_DEMO_NGINX you can find in `.env` file. As default it's 
 ## Configuration
 
 Feel free to change `docker-compose.yaml` to add an extra container and use `.env` to configure your setup. Remember to add extra code for `init.sh` to make it more useful for your needs.
-
-
-
